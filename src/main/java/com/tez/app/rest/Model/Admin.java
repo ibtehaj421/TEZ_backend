@@ -11,4 +11,14 @@ public class Admin extends UserBase {
     private String adminID;
     @Column(nullable = false,length = 5)
     private int orgID;
+
+    public String getUserName(){
+        return name;
+    }
+    public String getPassword(){
+        return password;
+    }
+    public String getEmail(){
+        return email;
+    }
 }

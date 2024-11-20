@@ -3,9 +3,11 @@ import com.tez.app.rest.Model.Admin;
 import com.tez.app.rest.Model.Driver;
 import com.tez.app.rest.Model.User;
 //import com.tez.app.rest.Model.UserBase;
+import com.tez.app.rest.Model.UserBase;
 import com.tez.app.rest.Repo.AdminRepo;
 import com.tez.app.rest.Repo.DriverRepo;
 import com.tez.app.rest.Repo.UserRepo;
+import com.tez.app.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,28 +15,46 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Autowired
-    UserRepo userRepo;
+    private UserService userService;
 
     @Autowired
-    AdminRepo adminRepo;
+    private AdminRepo adminRepo;
     @Autowired
     private DriverRepo driverRepo;
 
-    @PostMapping(path = "/saveuser")
+    @PostMapping(path = "/auth/register/user")
     public String saveUser(@RequestBody User user){
-        userRepo.save(user);
-        return  "User Saved.";
+        System.out.println("this "+user);
+        String ret = userService.registerUser(user);
+        return ret;
     }
 
-    @PostMapping(path = "/saveadmin")
+    @PostMapping(path = "/auth/register/admin")
     public String saveAdmin(@RequestBody Admin admin){
         adminRepo.save(admin);
         return "Admin Saved.";
     }
 
-    @PostMapping(path = "/admin/driver")
+    @PostMapping(path = "/auth/register/driver")
     public String saveDriver(@RequestBody Driver driver){
         driverRepo.save(driver);
         return "Driver Saved.";
     }
+
+    @PostMapping(path = "/login/user")
+    public String login(@RequestBody User user){
+        return userService.verify(user);
+    }
+
+    @PostMapping(path = "/login/admin")
+    public String loginAdmin(@RequestBody Admin admin){
+        //adminRepo.save(admin);
+        return "Admin Saved.";
+    }
+
+    @PostMapping(path = "/login/driver")
+    public String loginDriver(@RequestBody Driver driver){
+        return "Driver Saved.";
+    }
+
 }

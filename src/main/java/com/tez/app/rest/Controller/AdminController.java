@@ -17,4 +17,8 @@ public class AdminController {
 
         return userRepo.findAll();
     }
+    @GetMapping(path = "/sample")
+    public String getSample(){
+        return "sample.";
+    }
 }
