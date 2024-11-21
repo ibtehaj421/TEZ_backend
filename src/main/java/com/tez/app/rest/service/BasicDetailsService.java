@@ -21,9 +21,9 @@ public class BasicDetailsService implements UserDetailsService {
 
         UserBase user = userRepo.findByemail(email);
         if(user == null) {
-            throw new UsernameNotFoundException("The user was not found");
+            throw new UsernameNotFoundException("The user was not found "+email);
         }
-
+        System.out.println(user.getUserName());
         return new UserPrinicipal(user);
     }
 }

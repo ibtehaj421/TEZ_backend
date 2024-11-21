@@ -1,5 +1,6 @@
 package com.tez.app.rest.service;
 
+import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.Model.User;
 import com.tez.app.rest.Model.UserBase;
 import com.tez.app.rest.Model.UserPrinicipal;
@@ -24,6 +25,9 @@ public class UserService  {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    JWTService jwtService;
+
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 
@@ -41,7 +45,13 @@ public class UserService  {
     public String verify(UserBase user) {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
         if(auth.isAuthenticated())
-            return "User verified";
-        else return "User not verified";
+            return jwtService.generateToken(user.getEmail());
+        else return "Failed to verify";
+    }
+    public UserDTO setuserDTO(UserBase user) {
+        UserDTO userDTO = FactoryService.createUserDTO();
+        userDTO.name = user.getUserName();
+        userDTO.email = user.getEmail();
+        return userDTO;
     }
 }

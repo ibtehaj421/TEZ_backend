@@ -1,12 +1,12 @@
 package com.tez.app.rest.Controller;
+import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.Model.Admin;
 import com.tez.app.rest.Model.Driver;
 import com.tez.app.rest.Model.User;
 //import com.tez.app.rest.Model.UserBase;
 import com.tez.app.rest.Model.UserBase;
-import com.tez.app.rest.Repo.AdminRepo;
-import com.tez.app.rest.Repo.DriverRepo;
-import com.tez.app.rest.Repo.UserRepo;
+import com.tez.app.rest.service.AdminService;
+import com.tez.app.rest.service.DriverService;
 import com.tez.app.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +18,9 @@ public class AuthController {
     private UserService userService;
 
     @Autowired
-    private AdminRepo adminRepo;
+    private AdminService adminService;
     @Autowired
-    private DriverRepo driverRepo;
+    private DriverService driverService;
 
     @PostMapping(path = "/auth/register/user")
     public String saveUser(@RequestBody User user){
@@ -31,30 +31,24 @@ public class AuthController {
 
     @PostMapping(path = "/auth/register/admin")
     public String saveAdmin(@RequestBody Admin admin){
-        adminRepo.save(admin);
-        return "Admin Saved.";
+        String ret = adminService.registerUser(admin);
+        return ret;
     }
 
     @PostMapping(path = "/auth/register/driver")
     public String saveDriver(@RequestBody Driver driver){
-        driverRepo.save(driver);
+        driverService.registerUser(driver);
         return "Driver Saved.";
     }
 
-    @PostMapping(path = "/login/user")
+    @PostMapping(path = "/login")
     public String login(@RequestBody User user){
         return userService.verify(user);
     }
 
-    @PostMapping(path = "/login/admin")
-    public String loginAdmin(@RequestBody Admin admin){
-        //adminRepo.save(admin);
-        return "Admin Saved.";
-    }
 
-    @PostMapping(path = "/login/driver")
-    public String loginDriver(@RequestBody Driver driver){
-        return "Driver Saved.";
+    @GetMapping(path = "/default")
+    public String defaultUser(){
+        return "success";
     }
-
 }

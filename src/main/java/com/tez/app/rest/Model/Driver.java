@@ -11,10 +11,27 @@ public class Driver extends UserBase {
     public String getUserName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getPassword(){
         return password;
     }
     public String getEmail(){
         return email;
+    }
+
+    public void setPassword(String encode) {
+        password = encode;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }

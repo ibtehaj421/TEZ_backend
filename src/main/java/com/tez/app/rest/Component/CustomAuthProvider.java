@@ -1,18 +1,5 @@
 package com.tez.app.rest.Component;
 
-import com.tez.app.rest.Model.User;
-import com.tez.app.rest.Model.UserBase;
-import com.tez.app.rest.Repo.AdminRepo;
-import com.tez.app.rest.Repo.DriverRepo;
-import com.tez.app.rest.Repo.UserRepo;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
-
 //public class CustomAuthProvider implements AuthenticationProvider {
 //
 //    private final UserRepo userRepo;
