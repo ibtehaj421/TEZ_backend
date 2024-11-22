@@ -12,7 +12,7 @@ public class Route {
     @Column(name = "origin", length = 50)
     private String origin;
     @Column(name = "passes",length = 50)
-    private String passes;
+    private String passes; //irrelevant
     @Column(name = "destination", length = 50)
     private String destination;
     @Column(name = "schedule", length = 50)

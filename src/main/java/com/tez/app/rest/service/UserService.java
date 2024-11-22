@@ -1,5 +1,6 @@
 package com.tez.app.rest.service;
 
+import com.resend.core.exception.ResendException;
 import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.Model.User;
 import com.tez.app.rest.Model.UserBase;
@@ -29,10 +30,12 @@ public class UserService  {
     @Autowired
     JWTService jwtService;
 
+    @Autowired
+    MailingService mailingService;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 
-    public boolean registerUser(UserDTO req) {
+    public boolean registerUser(UserDTO req) throws ResendException {
         //System.out.println(user);
         if(req == null){
             return false;
@@ -47,6 +50,7 @@ public class UserService  {
         user.setRole(role);
         if(!userRepo.existsByemail(user.getEmail())){
             userRepo.save(user);
+            mailingService.sendMail(user.getEmail(), user.getUserName());
             //String ret = "User " + user.getUserName() + " registered";
             return true;
         }
@@ -64,7 +68,7 @@ public class UserService  {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
         if(auth.isAuthenticated())
             return jwtService.generateToken(user.getEmail());
-        else return "Failed to verify";
+        else return null;
     }
     public UserDTO setuserDTO(UserBase user) {
         UserDTO userDTO = FactoryService.createUserDTO();

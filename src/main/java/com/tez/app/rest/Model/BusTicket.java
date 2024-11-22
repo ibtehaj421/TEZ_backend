@@ -14,5 +14,9 @@ public class BusTicket {
     @Column(name ="liveLocation",nullable = true)
     private String locationURL;
     @Column(name = "status")
-    private String status;
+    private String status; //reserved , canceled , paid.
+    @Column(nullable = false)
+    private long seatID;
+    @Column(nullable = false)
+    private long userID; //the one who made the reservation.
 }

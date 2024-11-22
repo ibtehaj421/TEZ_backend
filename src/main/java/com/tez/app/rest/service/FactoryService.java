@@ -26,4 +26,11 @@ public class FactoryService {
     public static Admin createAdmin() {
         return new Admin();
     }
+
+    public static Seat createSeat() {
+        return new Seat();
+    }
+    public static Bus createBus() {
+        return new Bus();
+    }
 }

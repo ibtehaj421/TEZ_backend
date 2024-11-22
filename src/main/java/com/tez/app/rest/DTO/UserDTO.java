@@ -9,7 +9,7 @@ public class UserDTO {
     public String password;
     public int passLen;
     public String role; //the admins will get their roles from the organization admin.
-    public int level;
+    public int level; //organization id sent back
     public String admID;
     public String orgName;
 }

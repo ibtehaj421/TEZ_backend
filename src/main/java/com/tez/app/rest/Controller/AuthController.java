@@ -1,4 +1,5 @@
 package com.tez.app.rest.Controller;
+import com.resend.core.exception.ResendException;
 import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.Model.Admin;
 import com.tez.app.rest.Model.Driver;
@@ -23,7 +24,7 @@ public class AuthController {
     private DriverService driverService;
 
     @PostMapping(path = "/auth/register/user")
-    public String saveUser(@RequestBody UserDTO user){
+    public String saveUser(@RequestBody UserDTO user) throws ResendException {
         System.out.println("this "+user);
          if(userService.registerUser(user)){
              return "User Saved.";
