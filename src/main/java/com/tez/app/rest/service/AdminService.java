@@ -1,8 +1,11 @@
 package com.tez.app.rest.service;
 
 
+import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.Model.Admin;
+import com.tez.app.rest.Model.Organization;
 import com.tez.app.rest.Model.UserBase;
+import com.tez.app.rest.Repo.OrganizationRepo;
 import com.tez.app.rest.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,18 +22,39 @@ public class AdminService {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    OrganizationRepo orgRepo;
+
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 
-    public String registerUser(Admin admin) {
-        System.out.println(admin);
-        if(admin == null){
+    public String registerUser(UserDTO req) {
+        //System.out.println(admin);
+        if(req == null){
             return "Cannot register user";
         }
-        admin.setPassword(encoder.encode(admin.getPassword()));
-        userRepo.save(admin);
-        String ret = "User " + admin.getUserName() + " registered";
-        return ret;
+        Admin admin = new Admin();
+        admin.setName(req.name);
+        admin.setEmail(req.email);
+        admin.setadminID(generateAdminID(req.orgName));
+        admin.setOrgID((int)getOrgID(req.orgName));
+        admin.setPassword(encoder.encode(req.password));
+        if(!userRepo.existsByemail(req.email)){
+            userRepo.save(admin);
+
+            return "User " + admin.getUserName() + " registered";
+        }
+        return "User cannot be created.May already exist.";
+    }
+
+    private String generateAdminID(String name) {
+        Organization org = orgRepo.findByName(name);
+        return org.getName() + "67";
+    }
+
+    private long getOrgID(String name) {
+        Organization org = orgRepo.findByName(name);
+        return org.getId();
     }
 
     public String verify(UserBase user) {

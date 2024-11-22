@@ -23,14 +23,16 @@ public class AuthController {
     private DriverService driverService;
 
     @PostMapping(path = "/auth/register/user")
-    public String saveUser(@RequestBody User user){
+    public String saveUser(@RequestBody UserDTO user){
         System.out.println("this "+user);
-        String ret = userService.registerUser(user);
-        return ret;
+         if(userService.registerUser(user)){
+             return "User Saved.";
+         };
+        return "Cannot Create User.May already exist";
     }
 
     @PostMapping(path = "/auth/register/admin")
-    public String saveAdmin(@RequestBody Admin admin){
+    public String saveAdmin(@RequestBody UserDTO admin){
         String ret = adminService.registerUser(admin);
         return ret;
     }

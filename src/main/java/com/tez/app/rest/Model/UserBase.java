@@ -18,7 +18,11 @@ public abstract class UserBase {
 
     public abstract String getUserName();
     public abstract String getPassword();
-
+    public abstract long getId();
+    public abstract void setName(String name);
+    public abstract void setEmail(String email);
     public abstract String getEmail();
+
+    public abstract void setPassword(String password);
 
 }

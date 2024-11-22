@@ -13,7 +13,21 @@ public abstract class Organization {
     protected long id;
     @Column(nullable = false,length = 255)
     protected String name;
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-//    protected Role role;
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

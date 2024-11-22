@@ -17,6 +17,12 @@ public class Driver extends UserBase {
     public String getPassword(){
         return password;
     }
+
+    @Override
+    public long getId() {
+        return 0;
+    }
+
     public String getEmail(){
         return email;
     }

@@ -43,4 +43,13 @@ public class User extends UserBase {
     }
 
 
+    public void setPass(long id) {
+        if(id > 0) {
+            this.pass = id;
+        }
+    }
+    public long getPass() {
+        return pass;
+    }
+
 }

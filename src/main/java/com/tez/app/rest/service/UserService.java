@@ -5,6 +5,7 @@ import com.tez.app.rest.Model.User;
 import com.tez.app.rest.Model.UserBase;
 import com.tez.app.rest.Model.UserPrinicipal;
 import com.tez.app.rest.Repo.UserRepo;
+import com.tez.app.rest.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,15 +32,32 @@ public class UserService  {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 
-    public String registerUser(User user) {
-        System.out.println(user);
-        if(user == null){
-            return "Cannot register user";
+    public boolean registerUser(UserDTO req) {
+        //System.out.println(user);
+        if(req == null){
+            return false;
         }
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepo.save(user);
-        String ret = "User " + user.getUserName() + " registered";
-        return ret;
+        User user = FactoryService.createStudent();
+        //save user credentials.
+        user.setName(req.name);
+        user.setEmail(req.email);
+        user.setPassword(encoder.encode(req.password));
+        user.setPass(0);
+        Role role = getRole(req.role);
+        user.setRole(role);
+        if(!userRepo.existsByemail(user.getEmail())){
+            userRepo.save(user);
+            //String ret = "User " + user.getUserName() + " registered";
+            return true;
+        }
+        return false;
+    }
+
+    private Role getRole(String role) {
+        if(role.equals("STUDENT")){
+            return Role.STUDENT;
+        }
+        return Role.BASIC;
     }
 
     public String verify(UserBase user) {
