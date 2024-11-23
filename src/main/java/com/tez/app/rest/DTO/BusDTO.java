@@ -9,7 +9,7 @@ public class BusDTO {
     public int capacity;
     public long driverID;
     public long orgID;
-
+    public long route;
     public void setDetails(String model, String licNum, int capacity, long driverID, long orgID){
         this.model = model;
         this.licNum = licNum;

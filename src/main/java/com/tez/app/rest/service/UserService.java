@@ -35,7 +35,7 @@ public class UserService  {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 
-    public boolean registerUser(UserDTO req) throws ResendException {
+    public boolean registerUser(UserDTO req) throws Exception {
         //System.out.println(user);
         if(req == null){
             return false;

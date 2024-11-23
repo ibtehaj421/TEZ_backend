@@ -20,11 +20,12 @@ public class AuthController {
 
     @Autowired
     private AdminService adminService;
+
     @Autowired
     private DriverService driverService;
 
     @PostMapping(path = "/auth/register/user")
-    public String saveUser(@RequestBody UserDTO user) throws ResendException {
+    public String saveUser(@RequestBody UserDTO user) throws Exception {
         System.out.println("this "+user);
          if(userService.registerUser(user)){
              return "User Saved.";
@@ -48,7 +49,6 @@ public class AuthController {
     public String login(@RequestBody User user){
         return userService.verify(user);
     }
-
 
     @GetMapping(path = "/default")
     public String defaultUser(){

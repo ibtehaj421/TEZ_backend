@@ -19,7 +19,8 @@ public class Bus {
     private long driverID;
     @Column(nullable = false)
     private long orgID;
-
+    @Column(nullable = true,length = 5)
+    private long routeId;
 
     public void setDetails(String ModelName, String licPlateNumber, int capacity, long orgID) {
         this.ModelName = ModelName;
@@ -73,5 +74,13 @@ public class Bus {
 
     public void setOrgID(long orgID) {
         this.orgID = orgID;
+    }
+
+    public void setRouteId(long routeId) {
+        this.routeId = routeId;
+    }
+
+    public long getRouteId() {
+        return routeId;
     }
 }
