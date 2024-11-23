@@ -17,6 +17,9 @@ public interface BusRepo extends JpaRepository<Bus,Integer> {
     @Query(value = "SELECT * FROM bus WHERE orgid = :id",nativeQuery = true)
     List<Bus> findByID(@Param("id") long id);
 
+    @Query(value = "SELECT * FROM bus WHERE driverid = :input",nativeQuery = true)
+    Bus findByDriverID(@Param("input") long input);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE bus set driverid = :id where id = :self",nativeQuery = true)

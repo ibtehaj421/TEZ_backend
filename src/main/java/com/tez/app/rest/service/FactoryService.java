@@ -1,6 +1,7 @@
 package com.tez.app.rest.service;
 
 
+import com.tez.app.rest.DTO.ScheduleDTO;
 import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.Model.*;
 import com.tez.app.rest.Role;
@@ -32,5 +33,10 @@ public class FactoryService {
     }
     public static Bus createBus() {
         return new Bus();
+    }
+    public static Schedule createSchedule() { return new Schedule(); }
+
+    public static ScheduleDTO createScheduleDTO() {
+        return new ScheduleDTO();
     }
 }

@@ -33,4 +33,10 @@ public class BusController {
     public String updateDriver(@PathVariable long id,@RequestBody long driverid) {
         return busService.setDriver(id, driverid);
     }
+
+    @GetMapping(path = "/driver/bus/{id}") //return the bus object assigned to the driver.
+    public getBusDTO getDriverBus(@PathVariable long id){
+
+        return busService.getBus(id);
+    }
 }

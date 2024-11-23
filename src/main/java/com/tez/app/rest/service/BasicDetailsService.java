@@ -20,10 +20,11 @@ public class BasicDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         UserBase user = userRepo.findByemail(email);
+               // .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         if(user == null) {
             throw new UsernameNotFoundException("The user was not found "+email);
         }
-        System.out.println(user.getUserName());
+        //System.out.println(user.getUserName());
         return new UserPrinicipal(user);
     }
 }

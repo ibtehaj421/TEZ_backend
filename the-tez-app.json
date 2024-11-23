@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "the-tez-app",
+  "private_key_id": "67b0a2cf34d200d13e46002e74f28d1510db2d27",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC8G1duht4BSNmK\nZ1Ce9tkz1dNn+S01S7j+2qcyq6ABAWTYvJI7e6aEQXWVD1w84v0cIT5EdTsmxm/T\nj3mvuHuoF4OR8odRhMK1wQ/fOAjNDllHq1ZLwNjhkrjDzQduGCMX/oSfESskt/Fw\nQu3vz9J0Y5Zgq9sGShJEm5Jm0xDik7z5NBQOhIk6+X2VNojP0aC0MuytLKxujI4l\nY6iX5x/mhUvwG3x6xY2w4QXfudXS+CfJJquT38ANi1rzWow7BTrG7y9IZ5A4AM3N\n8DWZqcYRTgKCTcmvvLRcjtqRZfPPe9h0J42Wo89uZX3aJMb+ofZzRnLuV40oOqJx\niP1cr4vzAgMBAAECggEAAnJmmkD13VVpwwOiCFdUrvhulhEnNeTExMfqWd3iqHCw\ns6MMUerDWUASu/wlqoMXYMjL6w8NVG1LYhihMBh5v0+C/iCGAxjzgXK/9prffm9b\n2PNRHY4mJBUJAz8FBDkbJ8I/TmRmR8V+xgOQ3cg5yBrNh3dk03meMDdH2b+QHiph\nDSnOSO12gxlvSjOgsXsjUCzvw8Mlw1KRgmdx7HHTUV39AyKKwkNBr0SPXu3sB7MT\nKJB1KxK30umZLfCo0bRa6Qur11fTbYkmefvAW4HI09TK9yH7PltaRGixZOmv2n1I\n1co4jBYVI+9tfAOL0qxP0+4jjan3I+imEfIADbrPsQKBgQD7ptYXSj21ByofbBZr\ns+wSl3wyEWFs2aDDvza48bp9tymjDzjmdverqT1rDaszBdppLEVkyW7nvSKggEj8\nCvAOb72+NHFjOt0KNO+clNH9w4WxEcPGfM71lkc8juaHb8o8xvXyAwPWvaiFUs+M\nHmfL78rltAc28Fj07RbH3+OUYwKBgQC/W2s3QPlfEb4iXIAWxSmiIz7HnJIvX/hN\norLEvYW95376+L37bCbJGSH8kbTcRVola+W2CkmJmRp5bKkiK9OGTuka47bh9QIg\npf8k4MPc1tSKhIZLxLEy6NNQDUiwozfkUz03yX0Rwm9efupf5XEelE8c+jIQ42mR\nHIYHUsvXMQKBgGnMlZvLEbBnJ7V4OuDjDvAuEf/2wLADuwww+u+8aTxrYiz0vGZg\nQ/Y+u9yjLYPRBSdMfoxGB8OUB9fUt1qHuq9HGU27PKSMXdvpr4d0Jej7Z9yu7FEp\nrdUgbiiup4rvW+Y7e7FYxSdmK1CKJUnyio757KKwEoxtdejbOMWlgkejAoGAemq7\njl+MqNsq7cSLVQXQ+p7dnMl3Y8NbkB8TinVMSA7+1wOmVl/7+A6SBYgZUgk0AFik\nXe762IIPw7pWATxUV8nHqqIe7zLUp5pKPYdlBbSRyAO7/mDYk58LAF1fMVFZgkIW\nGchWsLPYl3VN7wdTdKKgcgNFYDR75o9+1tSK/yECgYBlUgs5VWgIPuj+06KExZ6Z\nP/xZle7BXID/MI31KdX/UeUDQ661yHqRt+/i8P4eOByJBGB46ok/Z1Sq5rKwOjSm\n6oM/tj/aqqqBe1pgR+l7xTR4NrdXlmotCmsg3knNuy2wzpZRy8gN6/H4PiTzHGcA\nS2MJug2HMvN1csGs4S7jXQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "tezapp@the-tez-app.iam.gserviceaccount.com",
+  "client_id": "100361268934608750003",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tezapp%40the-tez-app.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

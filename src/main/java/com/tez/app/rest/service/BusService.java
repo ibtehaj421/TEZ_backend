@@ -60,6 +60,16 @@ public class BusService {
         return list;
     }
 
+    public getBusDTO getBus(long id) {
+        Bus bus = repo.findByDriverID(id);
+        getBusDTO dto = new getBusDTO();
+        dto.bus = new BusDTO();
+        dto.bus.extractBus(bus);
+        List<Seat> seatList = seatRepo.findByBusID(bus.getId());
+        dto.seats = new ArrayList<>();
+        dto.seats.addAll(seatList);
+        return dto;
+    }
     public String setDriver(long busid,long driverid){
         //update the driver id value in the bus.
         int i = repo.updateDriver(driverid,busid);
