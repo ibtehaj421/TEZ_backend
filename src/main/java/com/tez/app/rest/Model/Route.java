@@ -9,17 +9,25 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name",length = 50)
+    private String name;
     @Column(name = "origin", length = 50)
     private String origin;
     @Column(name = "passes",length = 50)
     private String passes; //irrelevant make it into url
     @Column(name = "destination", length = 50)
     private String destination;
-    @Column(name = "schedule", length = 50)
-    private Integer schedule; //sch --> orgnazation -->
     @Column(name = "discription",length = 255)
     private String discription;
 
+
+    public void setDetails(String name,String origin, String passes, String destination, String discription) {
+        this.name = name;
+        this.origin = origin;
+        this.passes = passes;
+        this.destination = destination;
+        this.discription = discription;
+    }
     public long getId() {
         return id;
     }
@@ -36,9 +44,7 @@ public class Route {
         return destination;
     }
 
-    public Integer getSchedule() {
-        return schedule;
-    }
+
 
     public String getDiscription() {
         return discription;
@@ -60,11 +66,15 @@ public class Route {
         this.destination = destination;
     }
 
-    public void setSchedule(Integer schedule) {
-        this.schedule = schedule;
-    }
-
     public void setDiscription(String discription) {
         this.discription = discription;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

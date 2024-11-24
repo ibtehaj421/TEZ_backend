@@ -39,4 +39,21 @@ public class BusController {
 
         return busService.getBus(id);
     }
+
+    //add or remove a route from the bus.
+    @PutMapping(path = "/admin/bus/route/{id}/{route}")
+    public String updateRoute(@PathVariable long id,@PathVariable long route){
+        return busService.updateRoute(id,route);
+    }
+
+    //add or remove a schedule from the bus
+    @PutMapping(path = "/admin/bus/schedule/{id}/{schedule}")
+    public String updateSchedule(@PathVariable long id,@PathVariable long schedule){
+        return busService.updateSchedule(id,schedule);
+    }
+
+    @DeleteMapping(path = "/admin/bus/schedule/{id}/{schedule}")
+    public String deleteSchedule(@PathVariable long id,@PathVariable long schedule){
+        return busService.deleteSchedule(id,schedule);
+    }
 }

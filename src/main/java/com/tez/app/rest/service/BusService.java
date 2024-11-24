@@ -4,8 +4,10 @@ package com.tez.app.rest.service;
 import com.tez.app.rest.DTO.BusDTO;
 import com.tez.app.rest.DTO.getBusDTO;
 import com.tez.app.rest.Model.Bus;
+import com.tez.app.rest.Model.BusSchedule;
 import com.tez.app.rest.Model.Seat;
 import com.tez.app.rest.Repo.BusRepo;
+import com.tez.app.rest.Repo.BusScheduleRepo;
 import com.tez.app.rest.Repo.SeatRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,11 @@ public class BusService {
 
     @Autowired
     SeatRepo seatRepo;
+
+    @Autowired
+    BusScheduleRepo busScheduleRepo;
+    @Autowired
+    private BusRepo busRepo;
 
     public String createBus(BusDTO req){
         if(req == null){
@@ -77,5 +84,39 @@ public class BusService {
             return "Driver not found/Unsuccessful";
         }
         return "Driver updated.";
+    }
+
+    public String updateRoute(long id, long route) {
+        if(id < 0 || route < 0){
+            return "Route not found/Unsuccessful";
+        }
+        if(route == 0){
+            //set the value to null
+            //if a route is set to 0 it means the bus has no currently assigned route.
+            repo.updateRoute(route,id);
+            return "Cleared route from bus.";
+        }
+        repo.updateRoute(route,id);
+        return "Route updated.";
+    }
+
+    public String updateSchedule(long id, long schedule) {
+        if(id < 0 || schedule < 0){
+            return "Schedule not found/Unsuccessful";
+        }
+        if(schedule == 0){
+            //set to null. (remove from table in this case)
+            //runs a different query.
+        }
+        int i = busScheduleRepo.insert(id,schedule);
+        if(i == 0){
+            return "Unsuccessful";
+        }
+        return "Schedule added to bus.";
+    }
+
+    public String deleteSchedule(long id, long schedule) {
+        busScheduleRepo.deletebyID(id,schedule);
+        return "Schedule deleted.";
     }
 }

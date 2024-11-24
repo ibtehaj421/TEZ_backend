@@ -19,4 +19,52 @@ public class BusTicket {
     private long seatID;
     @Column(nullable = false)
     private long userID; //the one who made the reservation.
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getRouteID() {
+        return routeID;
+    }
+
+    public void setRouteID(long routeID) {
+        this.routeID = routeID;
+    }
+
+    public String getLocationURL() {
+        return locationURL;
+    }
+
+    public void setLocationURL(String locationURL) {
+        this.locationURL = locationURL;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public long getSeatID() {
+        return seatID;
+    }
+
+    public void setSeatID(long seatID) {
+        this.seatID = seatID;
+    }
+
+    public long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(long userID) {
+        this.userID = userID;
+    }
 }

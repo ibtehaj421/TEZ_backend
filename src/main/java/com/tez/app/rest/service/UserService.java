@@ -18,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class UserService  {
 
@@ -31,8 +33,13 @@ public class UserService  {
     JWTService jwtService;
 
     @Autowired
+     BusPassService passService;
+
+    @Autowired
     MailingService mailingService;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
+
 
 
     public boolean registerUser(UserDTO req) throws Exception {
@@ -75,5 +82,18 @@ public class UserService  {
         userDTO.name = user.getUserName();
         userDTO.email = user.getEmail();
         return userDTO;
+    }
+    public String generatePass(long id, long org) throws Exception {
+            if(id < 0 || org < 0){
+                return "Invalid request.";
+            }
+            long val = passService.generateNewPass(id,org);
+            if(val > 0){
+                UserBase fetch = userRepo.findByid(id);
+
+                mailingService.sendPassGenMail(fetch.getEmail(),fetch.getUserName(),val, LocalDate.now());
+                return "Successfully generated pass payment pending.";
+            }
+            return "Error generating pass.";
     }
 }

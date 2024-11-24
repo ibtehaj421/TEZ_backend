@@ -4,6 +4,7 @@ package com.tez.app.rest.Controller;
 //import com.tez.app.rest.Repo.UserRepo;
 //import org.springframework.beans.factory.annotation.Autowired;
 import com.tez.app.rest.service.MailingService;
+import com.tez.app.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,10 @@ public class UserController {
 
     @Autowired
     MailingService mailingService;
+
+    @Autowired
+    UserService userService;
+
     @GetMapping(value = "/")
     public String getPage(){
 
@@ -28,6 +33,12 @@ public class UserController {
         mailingService.sendMail("sarcasticreaper21@gmail.com","mr.saboor ahmed");
     }
 
+
+    //add a bus pass to the user
+    @PostMapping(path = "/user/pass/add/{id}/{org}")
+    public String assignPass(@PathVariable long id, @PathVariable long org) throws Exception {
+        return userService.generatePass(id,org);
+    }
 //    @PostMapping(path = "/save")
 //    public String saveUser(@RequestBody User user){
 //       userRepo.save(user);

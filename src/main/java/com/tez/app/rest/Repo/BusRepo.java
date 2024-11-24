@@ -24,4 +24,9 @@ public interface BusRepo extends JpaRepository<Bus,Integer> {
     @Transactional
     @Query(value = "UPDATE bus set driverid = :id where id = :self",nativeQuery = true)
     int updateDriver(@Param("id") long id, @Param("self") long self);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE bus SET route_id = :newroute WHERE id = :self",nativeQuery = true)
+    int updateRoute(@Param("newroute") long newroute, @Param("self") long self);
 }

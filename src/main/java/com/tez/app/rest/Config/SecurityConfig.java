@@ -4,6 +4,7 @@ package com.tez.app.rest.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -36,6 +37,7 @@ public class SecurityConfig {
         http.csrf().disable()
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/register/**","/login","/org/**").permitAll()
+                   // .requestMatchers(HttpMethod.DELETE).hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
             )
         .httpBasic(Customizer.withDefaults())
