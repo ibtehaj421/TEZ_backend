@@ -1,10 +1,10 @@
 package com.tez.app.rest.service;
 
 import com.resend.core.exception.ResendException;
+import com.tez.app.rest.DTO.BusTicketDTO;
+import com.tez.app.rest.DTO.PaymentDTO;
 import com.tez.app.rest.DTO.UserDTO;
-import com.tez.app.rest.Model.User;
-import com.tez.app.rest.Model.UserBase;
-import com.tez.app.rest.Model.UserPrinicipal;
+import com.tez.app.rest.Model.*;
 import com.tez.app.rest.Repo.UserRepo;
 import com.tez.app.rest.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 @Service
@@ -37,9 +39,14 @@ public class UserService  {
 
     @Autowired
     MailingService mailingService;
+
+    @Autowired
+    BusTicketService busTicketService;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-
-
+    @Autowired
+    private PaymentService paymentService;
+    @Autowired
+    private SeatService seatService;
 
 
     public boolean registerUser(UserDTO req) throws Exception {
@@ -95,5 +102,56 @@ public class UserService  {
                 return "Successfully generated pass payment pending.";
             }
             return "Error generating pass.";
+    }
+
+    public String payForPass(PaymentDTO req) throws Exception {
+        //for now there are no checks on the amount a user has it will only process the payment.
+        if(req == null){
+            return "Invalid request.";
+        }
+        Payment payment = paymentService.makePassPayment(req);
+        if(payment == null){
+            return "Invalid request.Could not be processed";
+        }
+        UserBase fetch = userRepo.findByid(req.userid);
+        mailingService.paymentEmail(fetch.getEmail(), fetch.getUserName(),payment);
+
+        return "Pass payment successful.";
+
+    }
+
+    public String reserveSeat(BusTicketDTO req) throws Exception {
+        if(req == null){
+            return "Invalid request.";
+        }
+        //check if seat is reserved or not.
+        if(!seatService.checkStatus(req.seatID)){
+            return "The seat cannot be reserved as it is already occupied.";
+        }
+        BusTicket val =  busTicketService.getTicket(req);
+        if(val.getId() > 0){
+            //proceed with sending email prompting to pay.
+            //this means a seat has been reserved.
+            UserBase fetch = userRepo.findByid(val.getUserID());
+            seatService.setStatus(req.seatID, "occupied");
+            mailingService.sendReservationMail(fetch.getEmail(),fetch.getUserName(),val);
+            return "Successfully reserved seat payment pending.";
+        }
+        return "Cannot be processed at this time.";
+    }
+
+    public String payForSeat(PaymentDTO req,long seat,long ticket) throws Exception {
+        if(req == null){
+            return "Invalid request.";
+        }
+        Payment payment = paymentService.makeSeatPayment(req,seat);
+        if(payment == null){
+            return "Invalid request.Could not be processed";
+        }
+        UserBase fetch = userRepo.findByid(req.userid);
+        mailingService.paymentEmail(fetch.getEmail(), fetch.getUserName(),payment);
+        busTicketService.setStatus(ticket,"paid");
+        return "Ticket payment successful.";
+
     }
 }

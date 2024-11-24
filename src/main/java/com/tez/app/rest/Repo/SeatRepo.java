@@ -18,4 +18,10 @@ public interface SeatRepo extends JpaRepository<Seat, Long> {
    @Transactional
    @Query(value = "UPDATE seats set status = :newStat WHERE id = :self",nativeQuery = true)
    int changeStatus(@Param("newStat") String status, @Param("self") long self);
+
+   @Query(value = "SELECT status FROM seats WHERE id = :input",nativeQuery = true)
+   String findStatus(@Param("input") long input);
+
+   @Query(value = "SELECT b.orgid FROM bus b JOIN seats s ON b.id = s.busid WHERE s.id = :input",nativeQuery = true)
+   long fetchOrgID(@Param("input") long input);
 }

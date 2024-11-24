@@ -10,4 +10,7 @@ public interface OrganizationRepo extends JpaRepository<Organization, Integer> {
     boolean existsByName(String name);
     @Query(value = "Select role FROM organization WHERE name = :name", nativeQuery = true)
     String getRole(@Param("name") String name);
+
+    @Query(value = "SELECT name FROM organization WHERE id = :orgID",nativeQuery = true)
+    String fetchName(@Param("orgID") long orgID);
 }

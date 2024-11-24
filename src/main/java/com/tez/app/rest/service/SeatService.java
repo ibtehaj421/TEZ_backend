@@ -12,8 +12,16 @@ public class SeatService {
     SeatRepo repo;
 
     public String setStatus(long seatId,String status) {
-        System.out.println(status);
+        //System.out.println(status);
         repo.changeStatus(status, seatId);
         return "Seat status updated.";
+    }
+
+    public boolean checkStatus(long seatId) {
+        String check = repo.findStatus(seatId);
+        if(check.equals("available")) {
+            return true;
+        }
+        return false;
     }
 }

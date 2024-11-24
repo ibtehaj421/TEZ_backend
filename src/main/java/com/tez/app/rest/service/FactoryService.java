@@ -49,4 +49,12 @@ public class FactoryService {
         return new RouteDTO();
     }
     public static BusPass createBusPass() { return new BusPass(); }
+
+    public static Payment createPayment() {
+        return new Payment();
+    }
+
+    public static BusTicket createTicket() {
+        return new BusTicket();
+    }
 }
