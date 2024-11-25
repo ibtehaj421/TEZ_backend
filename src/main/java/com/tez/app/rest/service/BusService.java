@@ -38,6 +38,8 @@ public class BusService {
         if(!repo.existsByLicPlateNumber(req.licNum)){
             //create the bus and assign the seats.
             add.setDetails(req.model,req.licNum,req.capacity,req.orgID);
+            //add.setRouteId(null);
+            //repo.insertBus(add.getModelName(),add.getCapacity(), add.getDriverID(), add.getOrgID(), add.getRouteId());
             repo.save(add);
             //add seats through a loop.
             for(int i = 1; i<= req.capacity;i++){
@@ -55,16 +57,7 @@ public class BusService {
     public List<getBusDTO> listBuses(long id) {
         List<getBusDTO> list = new ArrayList<>();
         List<Bus> buses = repo.findByID(id);
-        for(int i = 0; i < buses.size(); i++){
-            list.add(new getBusDTO());
-            list.get(i).bus = new BusDTO();
-            list.get(i).bus.extractBus(buses.get(i));
-            //add all seat details by searching for the list of seats under a bus.
-            List<Seat> seatList = seatRepo.findByBusID(buses.get(i).getId());
-            list.get(i).seats = new ArrayList<>();
-            list.get(i).seats.addAll(seatList);
-        }
-        return list;
+        return returnValues(buses, list);
     }
 
     public getBusDTO getBus(long id) {
@@ -118,5 +111,23 @@ public class BusService {
     public String deleteSchedule(long id, long schedule) {
         busScheduleRepo.deletebyID(id,schedule);
         return "Schedule deleted.";
+    }
+
+    public List<getBusDTO> getBusOnRoutes(long rt) {
+        List<getBusDTO> list = new ArrayList<>();
+        List<Bus> buses = repo.findByRoute(rt);
+        return returnValues(buses,list);
+    }
+    public List<getBusDTO> returnValues(List<Bus> buses,List<getBusDTO> list){
+        for(int i = 0; i < buses.size(); i++){
+            list.add(new getBusDTO());
+            list.get(i).bus = new BusDTO();
+            list.get(i).bus.extractBus(buses.get(i));
+            //add all seat details by searching for the list of seats under a bus.
+            List<Seat> seatList = seatRepo.findByBusID(buses.get(i).getId());
+            list.get(i).seats = new ArrayList<>();
+            list.get(i).seats.addAll(seatList);
+        }
+        return list;
     }
 }

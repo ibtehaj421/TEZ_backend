@@ -41,4 +41,12 @@ public class Driver extends UserBase {
     public int getLevel() {
         return level;
     }
+
+    public long getOrgID() {
+        return orgID;
+    }
+
+    public void setOrgID(long orgID) {
+        this.orgID = orgID;
+    }
 }

@@ -1,9 +1,12 @@
 package com.tez.app.rest.service;
 
 
+import com.tez.app.rest.Model.Seat;
 import com.tez.app.rest.Repo.SeatRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SeatService {
@@ -24,4 +27,11 @@ public class SeatService {
         }
         return false;
     }
+
+    public List<Seat> getBusSeats(long bus) {
+        return repo.findAllByBusID(bus);
+    }
+
+    //get list of seats for a specific bus,
+
 }

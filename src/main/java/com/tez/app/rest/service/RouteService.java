@@ -49,4 +49,15 @@ public class RouteService {
         }
         return dto;
     }
+
+    public List<RouteDTO> getOrgRoute(String org) {
+        List<Route> routes = repo.findByOrg(org);
+        List<RouteDTO> dto = new ArrayList<>();
+        for(int i=0;i<routes.size();i++){
+            dto.add(FactoryService.createRouteDTO());
+            dto.get(i).setDetails(routes.get(i));
+            //the buses will be null for now.
+        }
+        return dto;
+    }
 }

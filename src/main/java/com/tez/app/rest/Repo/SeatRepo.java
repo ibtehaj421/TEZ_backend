@@ -24,4 +24,6 @@ public interface SeatRepo extends JpaRepository<Seat, Long> {
 
    @Query(value = "SELECT b.orgid FROM bus b JOIN seats s ON b.id = s.busid WHERE s.id = :input",nativeQuery = true)
    long fetchOrgID(@Param("input") long input);
+
+   List<Seat> findAllByBusID(long busID);
 }

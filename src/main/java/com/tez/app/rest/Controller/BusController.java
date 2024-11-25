@@ -56,4 +56,10 @@ public class BusController {
     public String deleteSchedule(@PathVariable long id,@PathVariable long schedule){
         return busService.deleteSchedule(id,schedule);
     }
+
+    @GetMapping(path = "/public/bus/route/{rt}")
+    public List<getBusDTO> getBusRoutes(@PathVariable long rt){
+        return busService.getBusOnRoutes(rt);
+    }
+
 }

@@ -1,14 +1,12 @@
 package com.tez.app.rest.Controller;
 
 
+import com.tez.app.rest.DTO.BusDTO;
 import com.tez.app.rest.DTO.RouteDTO;
 import com.tez.app.rest.Model.Route;
 import com.tez.app.rest.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,16 @@ public class RouteController {
     public List<RouteDTO> getRoutes() {
         return routeService.getRoutes();
     }
+
+    //get routes used by an organization
+    @GetMapping(path = "/public/route/get/{org}")
+    public List<RouteDTO> getRoutesByOrg(@PathVariable String org) {
+        return routeService.getOrgRoute(org);
+    }
+
+//    @GetMapping(path = "public/route/bus/{route}")
+//    public List<BusDTO> getBusByRoute(@PathVariable long route) {
+//        return
+//    }
 
 }

@@ -4,6 +4,7 @@ package com.tez.app.rest.service;
 import com.tez.app.rest.DTO.RouteDTO;
 import com.tez.app.rest.DTO.ScheduleDTO;
 import com.tez.app.rest.DTO.UserDTO;
+import com.tez.app.rest.DTO.getLoginDTO;
 import com.tez.app.rest.Model.*;
 import com.tez.app.rest.Role;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,9 @@ public class FactoryService {
 
     public static BusTicket createTicket() {
         return new BusTicket();
+    }
+
+    public static getLoginDTO getLoginDTO() {
+        return new getLoginDTO();
     }
 }

@@ -1,6 +1,7 @@
 package com.tez.app.rest.Controller;
 import com.resend.core.exception.ResendException;
 import com.tez.app.rest.DTO.UserDTO;
+import com.tez.app.rest.DTO.getLoginDTO;
 import com.tez.app.rest.Model.Admin;
 import com.tez.app.rest.Model.Driver;
 import com.tez.app.rest.Model.User;
@@ -46,7 +47,7 @@ public class AuthController {
     }
 
     @PostMapping(path = "/login")
-    public String login(@RequestBody User user){
+    public getLoginDTO login(@RequestBody User user){
         return userService.verify(user);
     }
 

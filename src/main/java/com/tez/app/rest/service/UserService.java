@@ -4,6 +4,7 @@ import com.resend.core.exception.ResendException;
 import com.tez.app.rest.DTO.BusTicketDTO;
 import com.tez.app.rest.DTO.PaymentDTO;
 import com.tez.app.rest.DTO.UserDTO;
+import com.tez.app.rest.DTO.getLoginDTO;
 import com.tez.app.rest.Model.*;
 import com.tez.app.rest.Repo.UserRepo;
 import com.tez.app.rest.Role;
@@ -78,11 +79,40 @@ public class UserService  {
         return Role.BASIC;
     }
 
-    public String verify(UserBase user) {
+    public getLoginDTO verify(UserBase user) {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
-        if(auth.isAuthenticated())
-            return jwtService.generateToken(user.getEmail());
-        else return null;
+        if(auth.isAuthenticated()) {
+            getLoginDTO userdeets = FactoryService.getLoginDTO();
+            long fetchID = userRepo.findIDByemail(user.getEmail());
+            User retUser = userRepo.findUserByid(fetchID);
+            if(retUser != null){
+                //the user is a basic user.
+                userdeets.setUser(retUser.getId(),retUser.getUserName(),retUser.getEmail(),user.getPassword(),retUser.getRole(),jwtService.generateToken(user.getEmail()));
+                return userdeets;
+            }
+            //check now whether the value could be an admin.
+            Admin retAdmin = userRepo.findAdminByid(fetchID);
+            if(retAdmin != null){
+                //the user was an admin
+                userdeets.setAdmin(retAdmin.getId(),retAdmin.getUserName(),retAdmin.getEmail(),user.getPassword(),jwtService.generateToken(user.getEmail()),retAdmin.getOrgID());
+                Role role = userRepo.findRolebyid(fetchID);
+                userdeets.role = role;
+                return userdeets;
+            }
+            Driver retDriver = userRepo.findDriverByid(fetchID);
+            if(retDriver != null){
+                userdeets.setAdmin(retDriver.getId(),retDriver.getUserName(),retDriver.getEmail(),user.getPassword(),jwtService.generateToken(user.getEmail()),retDriver.getOrgID());
+                userdeets.level = retDriver.getLevel();
+                userdeets.role = Role.DRIVER;
+                return userdeets;
+            }
+            return null;
+//            System.out.println();
+//            return jwtService.generateToken(user.getEmail());
+        }
+        else {
+            return null;
+        }
     }
     public UserDTO setuserDTO(UserBase user) {
         UserDTO userDTO = FactoryService.createUserDTO();

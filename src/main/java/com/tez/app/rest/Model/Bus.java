@@ -16,17 +16,19 @@ public class Bus {
     @Column(nullable = false,length = 10)
     private int capacity;
     @Column(nullable = true,length = 10)
-    private long driverID;
+    private Long driverID;
     @Column(nullable = false)
     private long orgID;
     @Column(nullable = true,length = 5)
-    private long routeId;
+    private Long routeId;
 
     public void setDetails(String ModelName, String licPlateNumber, int capacity, long orgID) {
         this.ModelName = ModelName;
         this.licPlateNumber = licPlateNumber;
         this.capacity = capacity;
         this.orgID = orgID; //specifies that the bus belongs to the following organiztion
+        //this.routeId = null;
+        //this.driverID = null;
     }
     public long getId() {
         return id;
@@ -44,7 +46,7 @@ public class Bus {
         return capacity;
     }
 
-    public long getDriverID() {
+    public Long getDriverID() {
         return driverID;
     }
 
@@ -68,7 +70,7 @@ public class Bus {
         this.capacity = capacity;
     }
 
-    public void setDriverID(long driverID) {
+    public void setDriverID(Long driverID) {
         this.driverID = driverID;
     }
 
@@ -76,11 +78,11 @@ public class Bus {
         this.orgID = orgID;
     }
 
-    public void setRouteId(long routeId) {
+    public void setRouteId(Long routeId) {
         this.routeId = routeId;
     }
 
-    public long getRouteId() {
+    public Long getRouteId() {
         return routeId;
     }
 }
