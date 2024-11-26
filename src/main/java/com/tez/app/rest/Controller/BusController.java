@@ -23,8 +23,8 @@ public class BusController {
         return busService.createBus(bus);
     }
 
-    @GetMapping(path = "/admin/bus/get")
-    public List<getBusDTO> getBus(@RequestParam("id") long id){
+    @GetMapping(path = "/admin/bus/get/{id}")
+    public List<getBusDTO> getBus(@PathVariable("id") long id){
         //fetch the buses under an organization id.
         return busService.listBuses(id);
     }

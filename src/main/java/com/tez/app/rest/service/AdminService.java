@@ -26,9 +26,11 @@ public class AdminService {
     OrganizationRepo orgRepo;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    @Autowired
+    private MailingService mailingService;
 
 
-    public String registerUser(UserDTO req) {
+    public String registerUser(UserDTO req) throws Exception {
         //System.out.println(admin);
         if(req == null){
             return "Cannot register user";
@@ -36,12 +38,13 @@ public class AdminService {
         Admin admin = new Admin();
         admin.setName(req.name);
         admin.setEmail(req.email);
+        System.out.println(admin.getEmail().length());
         admin.setadminID(generateAdminID(req.orgName));
         admin.setOrgID((int)getOrgID(req.orgName));
         admin.setPassword(encoder.encode(req.password));
         if(!userRepo.existsByemail(req.email)){
             userRepo.save(admin);
-
+            mailingService.sendAdminMail(admin.getUserName(),admin.getEmail(),req.password);
             return "User " + admin.getUserName() + " registered";
         }
         return "User cannot be created.May already exist.";

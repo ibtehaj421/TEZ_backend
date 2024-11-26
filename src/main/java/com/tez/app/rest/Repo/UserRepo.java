@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 
 public interface UserRepo  extends JpaRepository<UserBase, Long>{
     UserBase findByname(String name);
@@ -34,4 +36,7 @@ public interface UserRepo  extends JpaRepository<UserBase, Long>{
     //find in drivers
     @Query(value = "select ub.id,ub.name,ub.email,ub.password,u.level,u.orgid from user_base ub join drivers u on ub.id = u.id where ub.id = :id",nativeQuery = true)
     Driver findDriverByid(@Param("id") Long id);
+
+    @Query(value = "SELECT * FROM user_base ub join admins a on ub.id = a.id where a.orgid = :name  ",nativeQuery = true)
+    List<Admin> getAdminsByOrg(@Param("name") long name);
 }

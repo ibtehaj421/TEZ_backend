@@ -13,4 +13,7 @@ public interface OrganizationRepo extends JpaRepository<Organization, Integer> {
 
     @Query(value = "SELECT name FROM organization WHERE id = :orgID",nativeQuery = true)
     String fetchName(@Param("orgID") long orgID);
+
+    @Query(value = "SELECT id FROM organization WHERE name = :name",nativeQuery = true)
+    long fetchId(@Param("name") String name);
 }

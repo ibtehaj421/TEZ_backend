@@ -62,4 +62,8 @@ public class FactoryService {
     public static getLoginDTO getLoginDTO() {
         return new getLoginDTO();
     }
+
+    public static Driver createDriver() {
+        return new Driver();
+    }
 }

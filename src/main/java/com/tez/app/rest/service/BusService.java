@@ -37,12 +37,12 @@ public class BusService {
         //List<Seat> seats = new ArrayList<Seat>();
         if(!repo.existsByLicPlateNumber(req.licNum)){
             //create the bus and assign the seats.
-            add.setDetails(req.model,req.licNum,req.capacity,req.orgID);
+            add.setDetails(req.model,req.licNum,Integer.parseInt(req.capacity),req.orgID);
             //add.setRouteId(null);
             //repo.insertBus(add.getModelName(),add.getCapacity(), add.getDriverID(), add.getOrgID(), add.getRouteId());
             repo.save(add);
             //add seats through a loop.
-            for(int i = 1; i<= req.capacity;i++){
+            for(int i = 1; i<= Integer.parseInt(req.capacity);i++){
                 Seat seat = FactoryService.createSeat();
                 seat.setDetails(add.getId(),i);
                 seatRepo.save(seat);

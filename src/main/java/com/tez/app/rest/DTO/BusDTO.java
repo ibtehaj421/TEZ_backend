@@ -7,11 +7,11 @@ public class BusDTO {
     public long id;
     public String model;
     public String licNum;
-    public int capacity;
+    public String capacity;
     public Long driverID;
     public long orgID;
     public Long route;
-    public void setDetails(String model, String licNum, int capacity, Long driverID, long orgID){
+    public void setDetails(String model, String licNum, String capacity, Long driverID, long orgID){
         this.model = model;
         this.licNum = licNum;
         this.capacity = capacity;
@@ -22,7 +22,7 @@ public class BusDTO {
         id = req.getId();
         model = req.getModelName();
         licNum = req.getLicPlateNumber();
-        capacity = req.getCapacity();
+        capacity = String.valueOf(req.getCapacity());
         driverID = req.getDriverID();
         orgID = req.getOrgID();
     }

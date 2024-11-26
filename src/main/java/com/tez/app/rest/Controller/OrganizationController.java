@@ -2,13 +2,14 @@ package com.tez.app.rest.Controller;
 
 
 import com.tez.app.rest.DTO.OrgDTO;
+import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.Model.Organization;
 import com.tez.app.rest.Repo.OrganizationRepo;
 import com.tez.app.rest.service.OrgService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class OrganizationController {
@@ -30,5 +31,10 @@ public class OrganizationController {
     @PostMapping(path = "org/login")
     public OrgDTO loginOrganization(@RequestBody OrgDTO org) {
         return orgService.orgLogin(org);
+    }
+
+    @GetMapping(path = "org/admins/{org}")
+    public List<UserDTO> getAllAdmins(@PathVariable("org") String org) {
+        return orgService.getAdmins(org);
     }
 }

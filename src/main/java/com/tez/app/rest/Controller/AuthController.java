@@ -1,5 +1,6 @@
 package com.tez.app.rest.Controller;
 import com.resend.core.exception.ResendException;
+import com.tez.app.rest.DTO.DriverRegDTO;
 import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.DTO.getLoginDTO;
 import com.tez.app.rest.Model.Admin;
@@ -35,15 +36,14 @@ public class AuthController {
     }
 
     @PostMapping(path = "/auth/register/admin")
-    public String saveAdmin(@RequestBody UserDTO admin){
+    public String saveAdmin(@RequestBody UserDTO admin) throws Exception {
         String ret = adminService.registerUser(admin);
         return ret;
     }
 
-    @PostMapping(path = "/auth/register/driver")
-    public String saveDriver(@RequestBody Driver driver){
-        driverService.registerUser(driver);
-        return "Driver Saved.";
+    @PostMapping(path = "/auth/register/driver/{org}")
+    public String saveDriver(@RequestBody DriverRegDTO driver,@PathVariable("org") long org) throws Exception {
+        return driverService.registerUser(driver,org);
     }
 
     @PostMapping(path = "/login")
