@@ -1,12 +1,12 @@
 package com.tez.app.rest.Controller;
 
 
+import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class DriverController {
@@ -16,4 +16,8 @@ public class DriverController {
 
     //@Autowired
 
+    @GetMapping(path = "/get/drivers/{org}")
+    public List<UserDTO> getDrivers(@PathVariable long org){
+        return driverService.getDrivers(org);
+    }
 }

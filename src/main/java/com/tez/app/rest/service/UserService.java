@@ -184,4 +184,8 @@ public class UserService  {
         return "Ticket payment successful.";
 
     }
+
+    public long fetchID(String email) {
+        return userRepo.findIDByemail(email);
+    }
 }

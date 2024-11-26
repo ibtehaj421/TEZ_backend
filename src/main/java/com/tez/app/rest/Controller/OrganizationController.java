@@ -6,6 +6,7 @@ import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.Model.Organization;
 import com.tez.app.rest.Repo.OrganizationRepo;
 import com.tez.app.rest.service.OrgService;
+import com.tez.app.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,8 @@ public class OrganizationController {
 
     @Autowired
     OrgService orgService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping(path = "/org/add")
     public String addOrganization(@RequestBody OrgDTO org) {
@@ -36,5 +39,10 @@ public class OrganizationController {
     @GetMapping(path = "org/admins/{org}")
     public List<UserDTO> getAllAdmins(@PathVariable("org") String org) {
         return orgService.getAdmins(org);
+    }
+
+    @GetMapping(path = "org/user/{email}")
+    public long getUserID(@PathVariable("email") String email) {
+        return userService.fetchID(email);
     }
 }

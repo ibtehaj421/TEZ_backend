@@ -56,6 +56,7 @@ public class OrgService {
             userDTOS.get(i).name = admins.get(i).getUserName();
             userDTOS.get(i).email = admins.get(i).getEmail();
             userDTOS.get(i).password = admins.get(i).getPassword();
+            userDTOS.get(i).orgName = org;
         }
         return userDTOS;
     }

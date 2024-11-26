@@ -12,4 +12,5 @@ public class UserDTO {
     public int level; //organization id sent back
     public String admID;
     public String orgName;
+    public long orgid;
 }

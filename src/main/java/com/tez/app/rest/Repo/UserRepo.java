@@ -39,4 +39,7 @@ public interface UserRepo  extends JpaRepository<UserBase, Long>{
 
     @Query(value = "SELECT * FROM user_base ub join admins a on ub.id = a.id where a.orgid = :name  ",nativeQuery = true)
     List<Admin> getAdminsByOrg(@Param("name") long name);
+
+    @Query(value = "SELECT * FROM user_base ub join drivers d ON ub.id = d.id WHERE d.orgid = :id",nativeQuery = true)
+    List<Driver> getDriversByOrg(@Param("id") long id);
 }

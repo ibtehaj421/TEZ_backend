@@ -62,4 +62,8 @@ public class UserController {
         return userService.payForSeat(req,seat,ticket);
     }
 
+    @GetMapping(path = "/user/id/{email}")
+    public long getUserID(@PathVariable String email) throws Exception {
+        return userService.fetchID(email);
+    }
 }
