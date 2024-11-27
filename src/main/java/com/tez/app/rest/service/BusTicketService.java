@@ -13,10 +13,10 @@ public class BusTicketService {
     @Autowired
     BusTicketRepo repo;
 
-    public BusTicket getTicket(BusTicketDTO req) {
+    public BusTicket getTicket(BusTicketDTO req,long seat) {
         BusTicket ticket = FactoryService.createTicket();
-        ticket.setSeatID(req.seatID);
-        ticket.setUserID(req.userId);
+        ticket.setSeatID(seat);
+        ticket.setUserID(Long.parseLong(req.userId));
         ticket.setStatus("reserved");
         return repo.save(ticket);
     }

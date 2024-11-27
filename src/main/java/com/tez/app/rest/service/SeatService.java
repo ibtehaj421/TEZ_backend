@@ -14,14 +14,14 @@ public class SeatService {
     @Autowired
     SeatRepo repo;
 
-    public String setStatus(long seatId,String status) {
+    public String setStatus(long busId,String status,int num) {
         //System.out.println(status);
-        repo.changeStatus(status, seatId);
+        repo.changeStatus(status, busId,num);
         return "Seat status updated.";
     }
 
-    public boolean checkStatus(long seatId) {
-        String check = repo.findStatus(seatId);
+    public boolean checkStatus(long busid,int num) {
+        String check = repo.findStatus(busid,num);
         if(check.equals("available")) {
             return true;
         }

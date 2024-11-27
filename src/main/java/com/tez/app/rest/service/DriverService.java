@@ -67,7 +67,8 @@ public class DriverService {
         List<UserDTO> userDTOS = new ArrayList<UserDTO>();
         for(int i = 0; i < drivers.size(); i++){
             userDTOS.add(FactoryService.createUserDTO());
-            userDTOS.get(i).id = drivers.get(i).getId();
+            //System.out.println(drivers.get(i).getId()+"THIS IS THE FETCHED ID");
+            userDTOS.get(i).id = userRepo.findIDByemail(drivers.get(i).getEmail());
             userDTOS.get(i).name = drivers.get(i).getUserName();
             userDTOS.get(i).email = drivers.get(i).getEmail();
             userDTOS.get(i).password = drivers.get(i).getPassword();

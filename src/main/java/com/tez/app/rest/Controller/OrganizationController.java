@@ -1,6 +1,7 @@
 package com.tez.app.rest.Controller;
 
 
+import com.tez.app.rest.DTO.NameDTO;
 import com.tez.app.rest.DTO.OrgDTO;
 import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.Model.Organization;
@@ -20,6 +21,8 @@ public class OrganizationController {
     OrgService orgService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrganizationRepo organizationRepo;
 
     @PostMapping(path = "/org/add")
     public String addOrganization(@RequestBody OrgDTO org) {
@@ -44,5 +47,15 @@ public class OrganizationController {
     @GetMapping(path = "org/user/{email}")
     public long getUserID(@PathVariable("email") String email) {
         return userService.fetchID(email);
+    }
+
+    @GetMapping(path = "/fetch/all")
+    public List<OrgDTO> getAllOrganizations() {
+        return orgService.getAll();
+    }
+
+    @GetMapping(path = "org/id")
+    public long getOrganizationID(@RequestBody NameDTO req) {
+        return organizationRepo.fetchByName(req.name);
     }
 }

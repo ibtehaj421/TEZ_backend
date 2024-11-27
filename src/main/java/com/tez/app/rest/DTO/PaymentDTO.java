@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class PaymentDTO {
     public long id;
-    public long userid;
-    public long orgid;
-    public double amount;
+    public String userid;
+    public String orgid;
+    public String amount;
     public LocalDate madeOn;
 }

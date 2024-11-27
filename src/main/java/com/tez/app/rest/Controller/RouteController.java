@@ -41,4 +41,9 @@ public class RouteController {
 //        return
 //    }
 
+    @GetMapping(path = "/driver/route/{driver}")
+    public RouteDTO getRoutesByDriver(@PathVariable long driver) {
+        return routeService.getRoteByDriver(driver);
+    }
+
 }

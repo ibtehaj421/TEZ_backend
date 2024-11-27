@@ -18,8 +18,11 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.model.Message;
 import com.tez.app.rest.Model.BusTicket;
 import com.tez.app.rest.Model.Payment;
+import com.tez.app.rest.Repo.BusTicketRepo;
 import com.tez.app.rest.Repo.OrganizationRepo;
+import com.tez.app.rest.Repo.SeatRepo;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.api.services.gmail.Gmail;
 
@@ -43,10 +46,14 @@ public class MailingService {
     private static final String APPLICATION_NAME = "TEZ app";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private final OrganizationRepo organizationRepo;
+    private final BusTicketRepo busTicketRepo;
     private Gmail service;
 
-    public MailingService(OrganizationRepo organizationRepo) {
+    @Autowired
+    SeatRepo seatRepo;
+    public MailingService(OrganizationRepo organizationRepo, BusTicketRepo busTicketRepo) {
         this.organizationRepo = organizationRepo;
+        this.busTicketRepo = busTicketRepo;
     }
 
     //    public MailingService() throws IOException, GeneralSecurityException {
@@ -348,7 +355,7 @@ public class MailingService {
                 + "            <p>Your bus ticket has been successfully <span class='status'>reserved</span>.</p>"
                 + "            <div class='details'>"
                 + "                <p><strong>Ticket ID: </strong> " + ticket.getId() + "</p>"
-                + "                <p><strong>Seat ID: </strong> " + ticket.getSeatID() + "</p>"
+                + "                <p><strong>Seat # : </strong> " + seatRepo.getSeatNumber(ticket.getSeatID()) + "</p>"
                 + "                <p><strong>Status: </strong>"+ticket.getStatus()+"</p>"
                 + "            </div>"
                 + "            <p>Proceed to payment options to change the status of your reservation.</p>"

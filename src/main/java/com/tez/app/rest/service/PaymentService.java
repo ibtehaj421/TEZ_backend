@@ -22,9 +22,9 @@ public class PaymentService {
     public Payment makePassPayment(PaymentDTO req){
         //process the payment for the pass and then update its status to paid.
         Payment payment = FactoryService.createPayment();
-        payment.setUserID(req.userid);
-        payment.setOrgID(req.orgid);
-        payment.setAmount(req.amount);
+        payment.setUserID(Long.parseLong(req.userid));
+        payment.setOrgID(Long.parseLong(req.orgid));
+        payment.setAmount(Double.parseDouble(req.amount));
         payment.setIssued(LocalDate.now());
         //but first check if the user even hass that amount..will implement later.
         Payment test = repo.save(payment);
@@ -36,9 +36,9 @@ public class PaymentService {
 
     public Payment makeSeatPayment(PaymentDTO req,long seatID) {
         Payment payment = FactoryService.createPayment();
-        payment.setUserID(req.userid);
+        payment.setUserID(Long.parseLong(req.userid));
         payment.setOrgID(seatRepo.fetchOrgID(seatID));
-        payment.setAmount(req.amount);
+        payment.setAmount(Double.parseDouble(req.amount));
         payment.setIssued(LocalDate.now());
         Payment test = repo.save(payment);
         if(test.getId() > 0){

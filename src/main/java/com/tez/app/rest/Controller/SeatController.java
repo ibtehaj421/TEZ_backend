@@ -15,9 +15,9 @@ public class SeatController {
     @Autowired
     SeatService seatService;
 
-    @PutMapping(path = "/driver/seat/status/{id}/{status}")
-    public String updateSeatStatus(@PathVariable long id, @PathVariable String status) {
-            return seatService.setStatus(id, status);
+    @PatchMapping(path = "/driver/seat/status/{id}/{status}/{num}")
+    public String updateSeatStatus(@PathVariable long id, @PathVariable String status,@PathVariable int num) {
+            return seatService.setStatus(id, status,num);
     }
 
     @GetMapping(path = "public/bus/seat/{bus}")

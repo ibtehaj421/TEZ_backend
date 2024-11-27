@@ -6,6 +6,8 @@ import com.tez.app.rest.DTO.PaymentDTO;
 import com.tez.app.rest.DTO.UserDTO;
 import com.tez.app.rest.DTO.getLoginDTO;
 import com.tez.app.rest.Model.*;
+import com.tez.app.rest.Repo.OrganizationRepo;
+import com.tez.app.rest.Repo.SeatRepo;
 import com.tez.app.rest.Repo.UserRepo;
 import com.tez.app.rest.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,10 @@ public class UserService  {
     private PaymentService paymentService;
     @Autowired
     private SeatService seatService;
+    @Autowired
+    private SeatRepo seatRepo;
+    @Autowired
+    private OrganizationRepo organizationRepo;
 
 
     public boolean registerUser(UserDTO req) throws Exception {
@@ -87,21 +93,21 @@ public class UserService  {
             User retUser = userRepo.findUserByid(fetchID);
             if(retUser != null){
                 //the user is a basic user.
-                userdeets.setUser(retUser.getId(),retUser.getUserName(),retUser.getEmail(),user.getPassword(),retUser.getRole(),jwtService.generateToken(user.getEmail()));
+                userdeets.setUser(userRepo.findIDByemail(retUser.getEmail()),retUser.getUserName(),retUser.getEmail(),user.getPassword(),retUser.getRole(),jwtService.generateToken(user.getEmail()));
                 return userdeets;
             }
             //check now whether the value could be an admin.
             Admin retAdmin = userRepo.findAdminByid(fetchID);
             if(retAdmin != null){
                 //the user was an admin
-                userdeets.setAdmin(retAdmin.getId(),retAdmin.getUserName(),retAdmin.getEmail(),user.getPassword(),jwtService.generateToken(user.getEmail()),retAdmin.getOrgID());
+                userdeets.setAdmin(userRepo.findIDByemail(retAdmin.getEmail()),retAdmin.getUserName(),retAdmin.getEmail(),user.getPassword(),jwtService.generateToken(user.getEmail()),retAdmin.getOrgID());
                 Role role = userRepo.findRolebyid(fetchID);
                 userdeets.role = role;
                 return userdeets;
             }
             Driver retDriver = userRepo.findDriverByid(fetchID);
             if(retDriver != null){
-                userdeets.setAdmin(retDriver.getId(),retDriver.getUserName(),retDriver.getEmail(),user.getPassword(),jwtService.generateToken(user.getEmail()),retDriver.getOrgID());
+                userdeets.setAdmin(userRepo.findIDByemail(retDriver.getEmail()),retDriver.getUserName(),retDriver.getEmail(),user.getPassword(),jwtService.generateToken(user.getEmail()),retDriver.getOrgID());
                 userdeets.level = retDriver.getLevel();
                 userdeets.role = Role.DRIVER;
                 return userdeets;
@@ -120,11 +126,12 @@ public class UserService  {
         userDTO.email = user.getEmail();
         return userDTO;
     }
-    public String generatePass(long id, long org) throws Exception {
-            if(id < 0 || org < 0){
+    public String generatePass(long id, String org) throws Exception {
+            if(id < 0 || org == null){
                 return "Invalid request.";
             }
-            long val = passService.generateNewPass(id,org);
+            long ordid = organizationRepo.fetchByName(org);
+            long val = passService.generateNewPass(id,ordid);
             if(val > 0){
                 UserBase fetch = userRepo.findByid(id);
 
@@ -143,9 +150,9 @@ public class UserService  {
         if(payment == null){
             return "Invalid request.Could not be processed";
         }
-        UserBase fetch = userRepo.findByid(req.userid);
+        UserBase fetch = userRepo.findByid(Long.parseLong(req.userid));
         mailingService.paymentEmail(fetch.getEmail(), fetch.getUserName(),payment);
-
+        passService.changeToPaid(fetch.getId());
         return "Pass payment successful.";
 
     }
@@ -155,19 +162,31 @@ public class UserService  {
             return "Invalid request.";
         }
         //check if seat is reserved or not.
-        if(!seatService.checkStatus(req.seatID)){
-            return "The seat cannot be reserved as it is already occupied.";
+        //fetch list of all seats and find the first available one with the said bus id.
+        System.out.println(req.busid);
+        Seat first = seatRepo.findFirstAvailableSeat(Long.parseLong(req.busid));
+        if(first == null){
+            return "No available seats";
         }
-        BusTicket val =  busTicketService.getTicket(req);
-        if(val.getId() > 0){
-            //proceed with sending email prompting to pay.
-            //this means a seat has been reserved.
-            UserBase fetch = userRepo.findByid(val.getUserID());
-            seatService.setStatus(req.seatID, "occupied");
-            mailingService.sendReservationMail(fetch.getEmail(),fetch.getUserName(),val);
-            return "Successfully reserved seat payment pending.";
-        }
-        return "Cannot be processed at this time.";
+        seatService.setStatus(first.getBusID(), "occupied",first.getSeatNumber());
+        BusTicket val =  busTicketService.getTicket(req, first.getId());
+        UserBase fetch = userRepo.findByid(val.getUserID());
+        mailingService.sendReservationMail(fetch.getEmail(),fetch.getUserName(),val);
+
+        return "Success.";
+//        if(!seatService.checkStatus(req.busid,req.seat)){
+//            return "The seat cannot be reserved as it is already occupied.";
+//        }
+//
+//        if(val.getId() > 0){
+//            //proceed with sending email prompting to pay.
+//            //this means a seat has been reserved.
+//
+//
+//
+//            return "Successfully reserved seat payment pending.";
+//        }
+//        return "Cannot be processed at this time.";
     }
 
     public String payForSeat(PaymentDTO req,long seat,long ticket) throws Exception {
@@ -178,7 +197,7 @@ public class UserService  {
         if(payment == null){
             return "Invalid request.Could not be processed";
         }
-        UserBase fetch = userRepo.findByid(req.userid);
+        UserBase fetch = userRepo.findByid(Long.parseLong(req.userid));
         mailingService.paymentEmail(fetch.getEmail(), fetch.getUserName(),payment);
         busTicketService.setStatus(ticket,"paid");
         return "Ticket payment successful.";

@@ -52,12 +52,23 @@ public class OrgService {
         List<UserDTO> userDTOS = new ArrayList<UserDTO>();
         for(int i = 0; i < admins.size(); i++){
             userDTOS.add(FactoryService.createUserDTO());
-            userDTOS.get(i).id = admins.get(i).getId();
+            userDTOS.get(i).id = userRepo.findIDByemail(admins.get(i).getEmail());
             userDTOS.get(i).name = admins.get(i).getUserName();
             userDTOS.get(i).email = admins.get(i).getEmail();
             userDTOS.get(i).password = admins.get(i).getPassword();
             userDTOS.get(i).orgName = org;
         }
         return userDTOS;
+    }
+
+    public List<OrgDTO> getAll() {
+        List<Organization> orgs = repo.findAll();
+        List<OrgDTO> dto = new ArrayList<>();
+        for(int i = 0; i < orgs.size(); i++){
+            dto.add(FactoryService.createOrgDTO());
+            dto.get(i).name = orgs.get(i).getName();
+            dto.get(i).type = repo.fetchType(orgs.get(i).getName());
+        }
+        return dto;
     }
 }

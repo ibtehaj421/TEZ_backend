@@ -16,4 +16,8 @@ public interface RouteRepo extends JpaRepository<Route, Integer> {
             "routeExtractor AS (SELECT route_id FROM bus WHERE orgid = (SELECT org_id FROM orgExtractor)) " +
             "SELECT r.* FROM routes r INNER JOIN routeExtractor re ON r.id = re.route_id",nativeQuery = true)
     List<Route> findByOrg(@Param("org") String org);
+
+
+    @Query(value = "with routevalue as (select route_id as route from bus where driverid = :driver) select * from routes where id = (select route from routevalue)",nativeQuery = true)
+    Route findByDriver(@Param("driver") long driver);
 }

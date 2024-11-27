@@ -29,8 +29,8 @@ public class BusController {
         return busService.listBuses(id);
     }
 
-    @PutMapping(path = "/admin/bus/driver/{id}")
-    public String updateDriver(@PathVariable long id,@RequestBody long driverid) {
+    @PutMapping(path = "/admin/bus/driver/{id}/{driverid}")
+    public String updateDriver(@PathVariable long id,@PathVariable long driverid) {
         return busService.setDriver(id, driverid);
     }
 

@@ -60,4 +60,11 @@ public class RouteService {
         }
         return dto;
     }
+
+    public RouteDTO getRoteByDriver(long driver) {
+        Route route = repo.findByDriver(driver);
+        RouteDTO dto = FactoryService.createRouteDTO();
+        dto.setDetails(route);
+        return dto;
+    }
 }

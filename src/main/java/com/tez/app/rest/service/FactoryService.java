@@ -1,10 +1,7 @@
 package com.tez.app.rest.service;
 
 
-import com.tez.app.rest.DTO.RouteDTO;
-import com.tez.app.rest.DTO.ScheduleDTO;
-import com.tez.app.rest.DTO.UserDTO;
-import com.tez.app.rest.DTO.getLoginDTO;
+import com.tez.app.rest.DTO.*;
 import com.tez.app.rest.Model.*;
 import com.tez.app.rest.Role;
 import org.springframework.stereotype.Service;
@@ -65,5 +62,21 @@ public class FactoryService {
 
     public static Driver createDriver() {
         return new Driver();
+    }
+
+    public static OrgDTO createOrgDTO() {
+        return new OrgDTO();
+    }
+
+    public static Feedback createFeedback() {
+        return new Feedback();
+    }
+
+    public static FeedbackDTO createFeedbackDTO() {
+        return new FeedbackDTO();
+    }
+
+    public static PassDTO createPassDTO() {
+        return new PassDTO();
     }
 }
